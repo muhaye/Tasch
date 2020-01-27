@@ -5,14 +5,17 @@ import kotlinx.serialization.*
 data class Product(val id: String,
                    val image: String,
                    val description: String,
-                   val colors: List<Color>,
+                   val colors: Array<Color>,
                    val size: Size,
                    val price: Double,
                    val Quantity: Int)
 
 @Serializable
-data class Size (val id: String,
-                 val height: Int,
+data class Wish(val id: String,
+                val product: Product)
+
+@Serializable
+data class Size (val height: Int,
                  val Width: Int,
                  val Depth: Int)
 
