@@ -40,7 +40,7 @@
                 android:layout_height="200dp"
                 tools:scrollbars="horizontal"
                 android:layout_weight="1"
-                tools:context="muh.mobi.tasch.ui.main.ProductsFragment"
+                tools:context="muh.mobi.tasch.fragment.ProductsFragment"
                 tools:listitem="@layout/fragment_product" />
 
         </LinearLayout>
@@ -74,7 +74,7 @@
                 android:layout_height="0dp"
                 android:layout_weight="1"
                 app:layoutManager="LinearLayoutManager"
-                tools:context="muh.mobi.tasch.ui.main.ProductsFragment"
+                tools:context="muh.mobi.tasch.fragment.ProductsFragment"
                 tools:listitem="@layout/fragment_wish" />
 
 

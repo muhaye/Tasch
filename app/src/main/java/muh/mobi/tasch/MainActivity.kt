@@ -2,7 +2,7 @@ package muh.mobi.tasch
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import muh.mobi.tasch.ui.main.ProductsFragment
+import muh.mobi.tasch.fragment.ProductsFragment
 
 class MainActivity : AppCompatActivity() {
 

@@ -1,4 +1,4 @@
-package muh.mobi.tasch.ui.main
+package muh.mobi.tasch.fragment
 
 //import muh.mobi.tasch.databinding.FragmentProductsListBinding
 
@@ -17,6 +17,7 @@ import muh.mobi.tasch.adapter.WishListRecyclerViewAdapter
 import muh.mobi.tasch.model.Product
 import muh.mobi.tasch.model.Wish
 import muh.mobi.tasch.presenter.ProductsPresenter
+import muh.mobi.tasch.ui.main.MainViewModel
 
 
 class ProductsFragment: Fragment() {
@@ -57,12 +58,7 @@ class ProductsFragment: Fragment() {
         // Set the adapter
         if (recyclerView is RecyclerView) {
             with(recyclerView) {
-
-                adapter = ProductsRecyclerViewAdapter(products) { product: Product ->
-//                    TFAManager.gigyaAssertionFor(registeredAddress, gigyaAssertions)?.let {
-//                        listener?.invoke(registeredAddress, it)
-//                    }
-                }
+                adapter = ProductsRecyclerViewAdapter(products, ::showDetails)
             }
         }
     }
@@ -76,6 +72,8 @@ class ProductsFragment: Fragment() {
             with(recyclerView) {
 
                 adapter = WishListRecyclerViewAdapter(wishes) { wish: Wish ->
+
+
                     //                    TFAManager.gigyaAssertionFor(registeredAddress, gigyaAssertions)?.let {
 //                        listener?.invoke(registeredAddress, it)
 //                    }
@@ -96,6 +94,18 @@ class ProductsFragment: Fragment() {
 
         productsPresenter.loadProducts()
         productsPresenter.loadWithList()
+    }
+
+    val productDetailFragment by lazy  { ProductDetailFragment()}
+
+    fun showDetails(product: Product) {
+
+        activity
+            ?.supportFragmentManager
+            ?.beginTransaction()
+            ?.replace(R.id.container, productDetailFragment, "productDetailFragment")
+            ?.addToBackStack(null)
+            ?.commit()
 
     }
 
