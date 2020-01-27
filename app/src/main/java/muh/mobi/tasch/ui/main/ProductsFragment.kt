@@ -6,12 +6,15 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.recyclerview.widget.RecyclerView
 import muh.mobi.tasch.R
+import muh.mobi.tasch.adapter.ProductsRecyclerViewAdapter
+import muh.mobi.tasch.model.Product
 
-class MainFragment : Fragment() {
+class ProductsFragment : Fragment() {
 
     companion object {
-        fun newInstance() = MainFragment()
+        fun newInstance() = ProductsFragment()
     }
 
     private lateinit var viewModel: MainViewModel
@@ -20,10 +23,10 @@ class MainFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
         ): View {
-        return inflater.inflate(R.layout.main_fragment, container, false)
+        return inflater.inflate(R.layout.fragment_produts_list, container, false)
     }
 
-    fun populateList(registeredAddress: Array<RegisteredAddress>, gigyaAssertions: Map<String, String> ) {
+    fun populateList(products: Array<Product>) {
 
         val recyclerView = view?.findViewById<View>(R.id.list)
 
@@ -31,10 +34,10 @@ class MainFragment : Fragment() {
         if (recyclerView is RecyclerView) {
             with(recyclerView) {
 
-                adapter = RegisteredAddressRecyclerViewAdapter(registeredAddress) { registeredAddress: RegisteredAddress ->
-                    TFAManager.gigyaAssertionFor(registeredAddress, gigyaAssertions)?.let {
-                        listener?.invoke(registeredAddress, it)
-                    }
+                adapter = ProductsRecyclerViewAdapter(products) { product: Product ->
+//                    TFAManager.gigyaAssertionFor(registeredAddress, gigyaAssertions)?.let {
+//                        listener?.invoke(registeredAddress, it)
+//                    }
                 }
             }
         }
