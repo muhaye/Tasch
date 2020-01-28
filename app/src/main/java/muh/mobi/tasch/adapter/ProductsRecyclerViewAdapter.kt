@@ -4,9 +4,8 @@ import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Adapter
 import android.widget.TextView
-import kotlinx.android.synthetic.main.fragment_product.view.*
+import kotlinx.android.synthetic.main.fragment_product_item.view.*
 import muh.mobi.tasch.R
 
 import muh.mobi.tasch.model.Product
@@ -35,7 +34,7 @@ class ProductsRecyclerViewAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context)
-                .inflate(R.layout.fragment_product, parent, false)
+                .inflate(R.layout.fragment_product_item, parent, false)
         return ViewHolder(view)
     }
 

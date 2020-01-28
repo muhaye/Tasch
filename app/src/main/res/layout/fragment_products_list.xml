@@ -5,11 +5,9 @@
     android:id="@+id/layout2">
 
     <data>
-
         <variable
             name="presenter"
             type="muh.mobi.tasch.presenter.ProductsPresenter" />
-
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -41,7 +39,7 @@
                 tools:scrollbars="horizontal"
                 android:layout_weight="1"
                 tools:context="muh.mobi.tasch.fragment.ProductsFragment"
-                tools:listitem="@layout/fragment_product" />
+                tools:listitem="@layout/fragment_product_item" />
 
         </LinearLayout>
 
@@ -77,9 +75,7 @@
                 tools:context="muh.mobi.tasch.fragment.ProductsFragment"
                 tools:listitem="@layout/fragment_wish" />
 
-
         </LinearLayout>
-
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

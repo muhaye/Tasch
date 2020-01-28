@@ -1,6 +1,5 @@
 package muh.mobi.tasch.fragment
 
-//import muh.mobi.tasch.databinding.FragmentProductsListBinding
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -29,7 +28,7 @@ class ProductsFragment: Fragment() {
     private lateinit var viewModel: MainViewModel
 
     private val productsPresenter by lazy {
-        ProductsPresenter(this@ProductsFragment::populateProduct,  this@ProductsFragment::populateWishList)
+        ProductsPresenter(::populateProduct, ::populateWishList)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
@@ -51,7 +50,6 @@ class ProductsFragment: Fragment() {
             LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
 
         var recyclerView = view?.findViewById<RecyclerView>(R.id.list)
-
 
         recyclerView?.layoutManager = horizontalLayoutManager
 
@@ -82,11 +80,9 @@ class ProductsFragment: Fragment() {
         }
     }
 
-
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         viewModel = ViewModelProviders.of(this).get(MainViewModel::class.java)
-        // TODO: Use the ViewModel
     }
 
     override fun onResume() {
@@ -106,6 +102,8 @@ class ProductsFragment: Fragment() {
             ?.replace(R.id.container, productDetailFragment, "productDetailFragment")
             ?.addToBackStack(null)
             ?.commit()
+
+        productDetailFragment.onProduct(product)
 
     }
 

@@ -6,7 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Adapter
 import android.widget.TextView
-import kotlinx.android.synthetic.main.fragment_product.view.*
+import kotlinx.android.synthetic.main.fragment_product_item.view.*
 import kotlinx.android.synthetic.main.fragment_wish.view.*
 import muh.mobi.tasch.R
 

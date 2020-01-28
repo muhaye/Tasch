@@ -9,6 +9,7 @@ class ProductManager {
 
     val products = Array(30) {
         Product("d",
+            "FooTitle",
             "url",
             "",
             Array(2, { Color("23,23,23") } ) ,
