@@ -1,6 +1,7 @@
 package muh.mobi.tasch.fragment
 
 
+import android.app.AlertDialog
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -10,14 +11,14 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import kotlinx.android.synthetic.main.fragment_products_list.*
 import muh.mobi.tasch.R
 import muh.mobi.tasch.adapter.ProductsRecyclerViewAdapter
-import muh.mobi.tasch.adapter.WishListRecyclerViewAdapter
+import muh.mobi.tasch.databinding.FragmentProductPreviewBinding
+import muh.mobi.tasch.databinding.FragmentProductWishBinding
 import muh.mobi.tasch.model.Product
-import muh.mobi.tasch.model.Wish
+import muh.mobi.tasch.model.Store
 import muh.mobi.tasch.presenter.ProductsPresenter
-import muh.mobi.tasch.ui.main.MainViewModel
-
 
 class ProductsFragment: Fragment() {
 
@@ -25,7 +26,7 @@ class ProductsFragment: Fragment() {
         fun newInstance() = ProductsFragment()
     }
 
-    private lateinit var viewModel: MainViewModel
+    val productDetailFragment by lazy  { ProductDetailFragment()}
 
     private val productsPresenter by lazy {
         ProductsPresenter(::populateProduct, ::populateWishList)
@@ -56,12 +57,14 @@ class ProductsFragment: Fragment() {
         // Set the adapter
         if (recyclerView is RecyclerView) {
             with(recyclerView) {
-                adapter = ProductsRecyclerViewAdapter(products, ::showDetails)
+                adapter = ProductsRecyclerViewAdapter<FragmentProductPreviewBinding>(
+                    R.layout.fragment_product_preview,
+                    products, ::showDetails)
             }
         }
     }
 
-    fun populateWishList(wishes: Array<Wish>) {
+    fun populateWishList(wishes: Array<Product>) {
 
         val recyclerView = view?.findViewById<View>(R.id.whish_list)
 
@@ -69,20 +72,11 @@ class ProductsFragment: Fragment() {
         if (recyclerView is RecyclerView) {
             with(recyclerView) {
 
-                adapter = WishListRecyclerViewAdapter(wishes) { wish: Wish ->
-
-
-                    //                    TFAManager.gigyaAssertionFor(registeredAddress, gigyaAssertions)?.let {
-//                        listener?.invoke(registeredAddress, it)
-//                    }
-                }
+                adapter = ProductsRecyclerViewAdapter<FragmentProductWishBinding>(
+                    R.layout.fragment_product_wish,
+                    wishes, ::showDetails)
             }
         }
-    }
-
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProviders.of(this).get(MainViewModel::class.java)
     }
 
     override fun onResume() {
@@ -90,9 +84,35 @@ class ProductsFragment: Fragment() {
 
         productsPresenter.loadProducts()
         productsPresenter.loadWithList()
+
+        checkoutButton?.setOnClickListener {
+
+            val builder = AlertDialog.Builder(context)
+
+            builder.setMessage(getString(R.string.are_sure))
+
+            builder.setPositiveButton(
+                "YES"
+            ) { dialog, which ->
+
+                Store.wishlist = mutableSetOf()
+                productsPresenter.loadWithList()
+
+                dialog.dismiss()
+            }
+
+            builder.setNegativeButton(
+                "NO"
+            ) { dialog, which ->
+                // Do nothing
+                dialog.dismiss()
+            }
+
+            val alert = builder.create()
+            alert.show()
+        }
     }
 
-    val productDetailFragment by lazy  { ProductDetailFragment()}
 
     fun showDetails(product: Product) {
 
@@ -104,7 +124,5 @@ class ProductsFragment: Fragment() {
             ?.commit()
 
         productDetailFragment.onProduct(product)
-
     }
-
 }

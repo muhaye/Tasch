@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/layout2">
+
+    <data>
+        <variable
+            name="product"
+            type="muh.mobi.tasch.model.Product" />
+    </data>
+
+    <LinearLayout
+        android:background="@drawable/border"
+        android:layout_margin="5dp"
+        android:layout_width="match_parent"
+        android:layout_height="110dp"
+        android:orientation="horizontal"
+        >
+
+        <ImageView
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_weight="0"
+            app:imageUrl="@{product.image}"
+            />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_weight="1"
+            android:layout_margin="10dp"
+            >
+
+            <TextView
+                android:text="@{ `$ ` + Double.toString( product.price) }"
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent" />
+
+            <TextView
+                android:text="@{ product.title }"
+                android:textStyle="bold"
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent" />
+
+            <TextView
+                android:text="@{ product.description }"
+                android:textSize="12dp"
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent" />
+
+            <TextView
+                android:text="@{ product.stockAvailablity() }"
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent" />
+
+
+        </LinearLayout>
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="0"
+            android:src="@drawable/disclosure"
+            />
+
+    </LinearLayout>
+
+</layout>

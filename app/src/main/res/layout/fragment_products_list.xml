@@ -10,72 +10,111 @@
             type="muh.mobi.tasch.presenter.ProductsPresenter" />
     </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
         <LinearLayout
-            android:id="@+id/linearLayout2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            android:orientation="horizontal">
+            android:background="#CCCCCC"
+            android:orientation="vertical">
 
-            <ProgressBar
-                android:id="@+id/progressBarProduct"
-                style="?android:attr/progressBarStyle"
+            <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:indeterminate="true"
-                android:visibility="@{safeUnbox(presenter.spinnerVisibility)}" />
+                android:layout_margin="10dp"
+                android:textStyle="bold"
+                android:text="@string/product_catalogue"
+                android:textSize="20dp"
+                />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/list"
                 android:name="muh.mobi.tasch.fragment.methodFragment"
                 android:layout_width="match_parent"
-                android:layout_height="200dp"
+                android:layout_height="140dp"
                 tools:scrollbars="horizontal"
                 android:layout_weight="1"
                 tools:context="muh.mobi.tasch.fragment.ProductsFragment"
-                tools:listitem="@layout/fragment_product_item" />
-
+                tools:listitem="@layout/fragment_product_preview" />
         </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/linearLayout"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_marginStart="40dp"
-            android:layout_marginEnd="40dp"
-            android:layout_marginBottom="100dp"
-            android:orientation="vertical"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/linearLayout2">
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
-            <ProgressBar
-                android:id="@+id/progressBarWish"
-                style="?android:attr/progressBarStyle"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:indeterminate="true"
-                android:visibility="@{safeUnbox(presenter.spinnerVisibility)}" />
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="@string/your_wish_list"
+                    android:textStyle="bold"
+                    android:layout_margin="10dp"
+                    android:layout_weight="1"
+
+                    />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text="@{ `Total $` + Double.toString(presenter.total) }"
+                    android:layout_margin="10dp"
+                    android:layout_weight="0"
+                    />
+
+            </LinearLayout>
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/whish_list"
-                android:name="muh.mobi.tasch.fragment.methodFragment"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1"
                 app:layoutManager="LinearLayoutManager"
                 tools:context="muh.mobi.tasch.fragment.ProductsFragment"
-                tools:listitem="@layout/fragment_wish" />
+                tools:listitem="@layout/fragment_product_wish" />
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:gravity="center"
+                >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text="@{ presenter.subTotalText }"
+                    android:layout_margin="4dp"
+                    android:layout_weight="0"
+                    />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="#77FF75"
+                    android:text="@string/free_shipping_world_wide"
+                    android:layout_margin="4dp"
+                    android:layout_weight="1"
+
+                    />
+                <Button
+                    android:id="@+id/checkoutButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="#ff5555"
+                    android:textColor="#dddddd"
+                    android:layout_margin="20dp"
+                    android:text="@string/proced_to_check_out" />
+
+
+            </LinearLayout>
 
         </LinearLayout>
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    </LinearLayout>
 </layout>

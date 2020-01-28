@@ -1,25 +1,41 @@
 package muh.mobi.tasch.adapter
 
-import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
-import kotlinx.android.synthetic.main.fragment_product_item.view.*
+import androidx.databinding.DataBindingUtil
+import androidx.databinding.ViewDataBinding
+import androidx.recyclerview.widget.RecyclerView
 import muh.mobi.tasch.R
-
+import muh.mobi.tasch.databinding.FragmentProductPreviewBinding
+import muh.mobi.tasch.databinding.FragmentProductWishBinding
 import muh.mobi.tasch.model.Product
 
-/**
- * [RecyclerView.Adapter] that can display a [DummyItem] and makes a call to the
- * specified [OnListFragmentInteractionListener].
- * TODO: Replace the implementation with code for your data type.
- */
 
-class ProductsRecyclerViewAdapter(
-        val products: Array<Product>,
-        val onItemSelected: (Product) -> Unit)
-    : RecyclerView.Adapter<ProductsRecyclerViewAdapter.ViewHolder>() {
+class ProductViewHolder<T: ViewDataBinding>(binding: T): RecyclerView.ViewHolder(binding.getRoot()) {
+
+    private val binding: T
+    fun bind(product: Product?) {
+
+        if (binding is FragmentProductPreviewBinding )
+             binding.product = product
+
+        if (binding is FragmentProductWishBinding )
+            binding.product = product
+
+        binding.executePendingBindings()
+    }
+
+    init {
+        this.binding = binding
+    }
+}
+
+class ProductsRecyclerViewAdapter<T: ViewDataBinding>(
+    val layoutItemRes: Int = R.layout.fragment_product_preview,
+    val products: Array<Product>,
+    val onItemSelected: (Product) -> Unit)
+    : RecyclerView.Adapter<ProductViewHolder<T>>() {
 
     private val mOnClickListener: View.OnClickListener
 
@@ -32,17 +48,21 @@ class ProductsRecyclerViewAdapter(
         }
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val view = LayoutInflater.from(parent.context)
-                .inflate(R.layout.fragment_product_item, parent, false)
-        return ViewHolder(view)
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ProductViewHolder<T> {
+
+        val inflater = LayoutInflater.from(parent.getContext())
+        // Inflate the layout for this fragment
+        val binding: T = DataBindingUtil.inflate(
+            inflater, layoutItemRes, parent, false)
+        return ProductViewHolder(binding)
     }
 
-    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: ProductViewHolder<T>, position: Int) {
         val item = products[position]
-        holder.mContentView.text = item.description
 
-        with(holder.mView) {
+        holder.bind(item)
+
+        with(holder.itemView) {
             tag = item
             setOnClickListener(mOnClickListener)
         }
@@ -50,11 +70,5 @@ class ProductsRecyclerViewAdapter(
 
     override fun getItemCount(): Int = products.size
 
-    inner class ViewHolder(val mView: View) : RecyclerView.ViewHolder(mView) {
-        val mContentView: TextView = mView.product_item
 
-        override fun toString(): String {
-            return super.toString() + " '" + mContentView.text + "'"
-        }
-    }
 }
